@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- banner -->
+<img src="{% static 'images/ecommerce_home.png' %}" class="img-fluid p-3" alt="#">    
+
+<!-- post -->
+<div class="container text-center d-flex flex-column align-items-center ">
+  <h3 class="text-center pt-3 ">Featured Products</h3>
+  <div class="row">
+    {% for x in products %}
+    <div class="col">
+      <div class="card m-3" style="width: 13rem; height: 350px;border-radius: 30px;">
+        {% if x.stock < 1 %}
+        <div style="max-height: 180px;min-width: 200px;">
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+            <img src="{{ x.images.url }}" style="width:80%" class="card-img-top p-3" alt="">
+          </a>
+        </div>
+      {% else %}
+        <div style="max-height: 180px;min-width: 200px;">
+          <a href="{{ x.get_url }}"> 
+            <img src="{{ x.images.url }}" style="width:80%" class="card-img-top p-3" alt="">
+          </a>
+        </div>
+      {% endif %}
+          <div class="card-body">
+            <h5 class="card-title m-1">{{ x.product_name }}</h5>
+            <p class="card-text m-1"style="font-size:x-large ; color: brown;">$ <strong>{{x.price}}</strong></p>
+            {% if x.stock < 1 %}
+              <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger btn-sm">sold out</a>
+            {% else %}
+            <div class="btn-group m-1" role="group" aria-label="Basic outlined example">
+              <a href="{{ x.get_url }}" class="btn btn-outline-secondary px-3"><i class="fas fa-eye"></i></a>
+              <a href="{% url 'add_fav' x.slug %}" class="btn btn-outline-secondary px-3"><i class="far fa-heart"></i></a>
+            </div>
+            {% endif %}
+          </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<!-- stock sold out model  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="fal fa-sad-tear" style="font-size:xx-large ;color:cadetblue"></i>
+        <h4 style="color:brown ;">Sorry product is currently out of stock, Try again later</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

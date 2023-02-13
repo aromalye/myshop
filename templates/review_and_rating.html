@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="container">
+    <h4 class="text-center m-3">Review and rating</h4>
+</div>
+<div class="container p-3" style="width: 50%; border: .5px solid black">
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <h6>Rate this Product</h6>
+        {% include 'includes/alert.html' %}
+        <select name="rating_value" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+            <option value="1">Very bad</option>
+            <option value="2">Bad</option>
+            <option selected value="3">Good</option>
+            <option value="4">Very good</option>
+            <option value="5">Exellent</option>
+        </select>
+        <button type="submit" class="btn btn-sm btn-info my-3">Rate Now</button>
+    </form>
+
+        <hr>
+        
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <h6>Review about this Product</h6>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="review title. . ." required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Review</label>
+            <textarea name="review" class="form-control" id="exampleFormControlTextarea1" style="max-height: 150px;" rows="3" placeholder="Share your experience about this product. . ." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-sm btn-success m-1">submit</button>
+    </form>
+</div>
+{% endblock %}

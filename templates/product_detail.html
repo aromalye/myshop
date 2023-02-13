@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <!-- productdetails -->
+    <div class="container p-3">
+    <div class="row">
+        <div class="col" style="width: 50%;">
+            <div class="card text-center"style="border: 2px solid rgb(189, 199, 193);">
+                <img src="{{single_product.images.url}}">
+            </div>
+        </div>
+        <div class="col">
+            <div class="card p-3 my-3">
+                <form action="{% url 'add_cart' single_product.id single_product.size single_product.color %}" method="GET">
+                    <div style="width: 80px;background-color:rgb(28, 92, 70);color:white; border-radius: 5px;">
+                        <h6 class="px-3"> {{ single_product.category }}</h6>
+                    </div>
+                    <h4 style="color:rgb(63, 104, 85) ;">{{single_product.product_name}}</h4>
+                    <h2 style="font-size:medium ; color: brown;" >$ {{single_product.price}}</h2>
+        
+                    <div class="card py-1" style="width: 30%;border: none;">
+                      
+                        <select name="size" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                          {% for x in single_product.size %}
+                          <option value1="{{ x }}">{{ x }}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+        
+                    <div class="card py-1" style="width: 30%;border: none;">
+                        <select name="color" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                          {% for x in single_product.color %}
+                          <option value1="{{ x }}">{{ x }}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+                      <button type="submit" class="btn btn-outline-success px-1 btn-sm my-3"><i class="far fa-shopping-cart"></i> Add Cart</button>
+                      <a href="{% url 'add_fav' single_product.slug %}" type="button" class="btn btn-outline-primary px-3 my-3 btn-sm"><i class="far fa-heart"></i></a>
+                    <h4 style="font-size:large ;">{{single_product.description}}</h4>
+                    </form>
+            </div>
+            <div class="container">
+                <h4 class="py-3"> Rating And Reviews </h4>
+                <div class="container text-start">
+                  <div class="row">
+                    <div class="col">
+                      <h3>{{rating_rounded}} <i style="font-size:large ;color: #f74848;" class="fas fa-star"></i></h3>
+                      <p  class="text-muted"><strong>{{rating_count}}</strong> ratings and <strong>{{review_count}}</strong> reviews</p>
+                    </div>
+                    <div class="col">
+                      <p style="font-size:x-small;color: #f74848; margin-bottom: 0;"> <span class="px-1" style="font-size:small ;color: #352e2e;"><strong> {{star_count_5}}</strong></span>
+                      <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i> <i class="fas fa-star"></i></p>
+
+                      <p style="font-size:x-small;color: #f74848; margin-bottom: 0;"> <span class="px-1" style="font-size:small ;color: #352e2e;"><strong> {{star_count_4}}</strong></span>
+                        <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i> </p>
+
+                      <p style="font-size:x-small;color: #f74848; margin-bottom: 0;"> <span class="px-1" style="font-size:small ;color: #352e2e;"><strong> {{star_count_3}}</strong></span>
+                        <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></p>
+                          
+                      <p style="font-size:x-small;color: #f74848; margin-bottom: 0;"> <span class="px-1" style="font-size:small ;color: #352e2e;"><strong> {{star_count_2}}</strong></span>
+                        <i class="fas fa-star"></i> <i class="fas fa-star"></i></p>
+                    
+                      <p style="font-size:x-small;color: #f74848; margin-bottom: 0;"> <span class="px-1" style="font-size:small ;color: #352e2e;"><strong> {{star_count_1}}</strong></span>
+                        <i class="fas fa-star"></i></p>
+
+                    </div>
+                  </div>
+              </div> 
+                {% if is_product_odered is True %}
+                <a class="btn btn-sm btn-outline-info mx-3" href="{{ single_product.get_url_review }}">Rate product</a>
+                {% else %}
+                <a class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModalreview" href="#">Rate product</a>
+                {% endif %}
+                <hr>
+                {% for x in product_review%}
+                <p style="font-size:smaller; margin: 0;color:#588157 ;">@ {{ x.user }} | <strong> {{ x.review_title }} </strong></p>
+                <p class="card-text text-muted">{{ x.review }}</p>
+                <p style="font-size:x-small; margin: 0;color:#4d2f04 ;">{{ x.created_date }}</p>
+
+                <hr>
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- buy product to rate it model  -->
+<div class="modal fade" id="exampleModalreview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <i class="fal fa-sad-tear" style="font-size:xx-large ;color:cadetblue"></i>
+          <p class="m-3" style="color:brown;">SORRY, you should buy this product to rate it!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if fav_count > 0 %}
+    <div class=" my-3 container text-center ">
+        <div class="table-responsive">
+          <table class="table" style="width: 800px;">
+            <tr>
+                <th style="width: 100px;">Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Remove</th>
+            </tr>
+            {% for x in fav %}
+            <tr>
+                <td><a href="{{ x.Product.get_url }}"><img src="{{ x.Product.images.url }}" width="65%"></a></td>
+                <td ><a href="{{ x.Product.get_url }}"style="text-decoration:none;color:#2a9d8f;">{{x.Product}}</a></td>
+                <td>$ {{x.Product.price}}</td>
+                <td><a href="{% url 'remove_fav' x.Product.slug %}"><button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></button></a></td>
+            </tr>
+            {% endfor %}
+           </table>
+        </div>
+    </div>
+    {% else %}
+    <h4 class="text-center p-5"> Sorry You dont have any favourites ! </h4>
+
+
+{% endif %}
+
+
+
+
+
+{% endblock %}

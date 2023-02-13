@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  {% include 'includes/dashboard_sidebar.html' %}
+
+    <div class="col-md-8" style="padding: 60px; color: rgb(37, 97, 77);">
+        <ul class="list-group">
+            <p class="list-group-item">Logged in as : <span><strong>{{ user.username }} </strong></span>  
+        </ul>
+        <div class="card-body">
+            <div class="row">
+              
+               <div class="col-md-6 my-1">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                      <h5 class="card-title">Total Orders</h5>
+                      <p class="card-text">{{order_count}}</p>
+                      <a href="{% url 'my_orders' %}" class="btn btn-primary btn-sm">View orders</a>
+                    </div>
+                </div>
+               </div>
+               <div class="col-md-6 my-1">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                      <img style="max-width: 50px; border-radius:10px ;" src="{{ profile.profileimg.url }}" alt="avatar">
+                      <p class="card-text my-0">{{ user.email }}</p>
+                      <!-- <p class="card-text"></p> -->
+                    </div>
+                </div>
+               </div>
+            </div>
+        </div>
+        
+    </div>
+
+        
+    
+</div>
+{% endblock %}
