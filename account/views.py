@@ -112,6 +112,7 @@ def signout(request):
 def forgot_password(request):
     if request.method == 'POST':
         email = request.POST['email']
+        print("dd")
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email__exact=email)
 
@@ -124,6 +125,7 @@ def forgot_password(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
+            print(message)
             to_email = email
             email = EmailMessage(
                 mail_subject, 
@@ -203,7 +205,9 @@ def dashboard(request):
 
 
 def edit_profile(request):
+    print(request.user)
     profile = Profile.objects.get(user=request.user)
+    # print(profile)
     if request.method == 'POST': 
         
         if request.FILES.get('profile_pic') == None:
